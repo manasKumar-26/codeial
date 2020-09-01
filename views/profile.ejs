@@ -1,0 +1,41 @@
+<h1>Profile</h1>
+<div class="enclosing">
+<div class="container-fluid" id="main">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <h4>Your Posts</h4>
+            <div class="jumbotron jumbotron-fluid" id="postsContainer">
+                <div class="container">
+                    <% for(let p of post) { %>
+                        <div class="flex-c">
+                            <div class="flexr">
+                                <div><h5><%= locals.user.name %></h5></div>
+                                <div><small><%= p.updatedAt.toISOString().substring(0,10) %></small></div>
+                            </div>
+                            <div class="jumbotron flexr colorStyle">
+                                <%=  p.content %>
+                                <% if(locals.user && locals.user.id == p.user) {%>
+                                    <div>
+                                        <a href="/posts/delete/?id=<%= p.id%>"><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                <% } %>
+                            
+                            </div>
+                        </div>
+                        <%- include('comment', {post:p}); %>
+                        <div id="hrlength"></div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    </div>
+</div>
+</div>
+<div class="friendsflex">
+    <div class="jumbotron colorStyle friendsStyle">
+        <%- include('friend',{friends:users}); %>
+    </div>
+</div>
