@@ -18,12 +18,15 @@
                                     <%=  p.content %>
                                     <% if(locals.user && locals.user.id == p.user.id) {%>
                                         <div>
-                                            <a href="/posts/delete/?id=<%= p.id%>"><i class="far fa-trash-alt"></i></a>
+                                            <a class="deletepost" href="/posts/delete/?id=<%= p.id%>"><i class="far fa-trash-alt"></i></a>
                                         </div>
                                     <% } %>
                                 </div>
                             </div>
-                            <%- include('comment',{post:p}); %>
+                            <form action="/showComments" method="POST">
+                                <input type="hidden" name="post" value="<%= p.id %>">
+                                <input  type="submit" value="Show Comments" id="showComments">
+                            </form> 
                             <div id="hrlength"></div>
                         <% } %>
                     </div>

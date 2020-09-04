@@ -23,6 +23,7 @@ app.use(sassMiddleware({
 }));
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname,'assets')));
+app.use('/uploads',express.static(__dirname+'/uploads'));
 app.use(layout);
 app.use(session({
     name:'codeialUsingPassport',

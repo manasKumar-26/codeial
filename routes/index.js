@@ -11,6 +11,7 @@ router.use('/signup',require('./signup'));
 router.use('/posts',require('./posts'));
 router.post('/showComments',commentController.showComments);
 router.get('/feed',postsController.viewFeed);
+router.post('/update',userController.updateProfile);
 router.get('/Detailprofile',postsController.detailProfile);
 router.get('/signout',userController.signout);
 module.exports=router;

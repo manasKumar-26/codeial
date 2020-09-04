@@ -7,6 +7,7 @@ module.exports.create=function(req,res)
     {
         return res.redirect('/signin');
     }
+    console.log('post finding');
     posts.findById(req.body.post,function(err,post){
         if(post){
             comments.create({
@@ -16,13 +17,13 @@ module.exports.create=function(req,res)
             },(err,comment)=>{
                 post.comment.push(comment);
                 post.save();
-                // if(req.rawHeaders[27]=='http://localhost:8000/showComments')
-                // {
-                //    return res.render('home',{
-                //        title:'Codeial | Home',
-                //    }) 
-                // }
-                    return res.redirect('back');
+                if(req.xhr){
+                    return res.status(200).json({
+                        newComment:comment,
+                        user:req.user.name,
+                    });
+                };
+                return res.redirect('back');
                 
             });
 
@@ -73,6 +74,10 @@ module.exports.showComments=async function(req,res){
     //     });
     // })
     try{
+        if(req.query.id){
+            console.log('true')
+            req.body.post=req.query.id;
+        }
         let post=await posts.findById(req.body.post)
                     .populate('user')
                     .populate({
@@ -86,7 +91,7 @@ module.exports.showComments=async function(req,res){
                 posts:post,
             });
     }catch(err){
-        console.errot.bind(console,"Error Fired up");
+        console.error.bind(console,"Error Fired up");
         return;
     }
     

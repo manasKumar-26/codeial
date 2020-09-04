@@ -54,7 +54,7 @@ module.exports.viewFeed=async function(req,res){
     // })
     try {
         let users=await user.find({});
-        let post=await posts.find({}).populate('user');
+        let post=await posts.find({}).populate('user').sort('-createdAt');
         return res.render('feed',{
             title:'User | Feed',
             post:post,
@@ -78,18 +78,26 @@ module.exports.destroy=async function(req,res){
     //         return res.redirect('back');
     //     }
     // })
-    try {
-        let post=await posts.findById(req.query.id)
-        if(post.user == req.user.id){
-            post.remove();
-            await comments.deleteMany({post:req.query.id});
+  
+        try {
+            let post=await posts.findById(req.query.id)
+            if(post.user == req.user.id){
+                post.remove();
+                await comments.deleteMany({post:req.query.id});
+            }
+            let remainingPost=await posts.find({}).populate('user');
+            if(req.xhr){
+                return res.status(200).json({
+                    post:remainingPost,
+                });
+              }
+            req.flash('success','Post Deleted !');
+            return res.redirect('/profile');
+        } catch (error) {
+            console.log('Error',error);
+            return res.redirect('back');
         }
-        return res.redirect('/profile');
-    } catch (error) {
-        console.log('Error',err);
-        return res.redirect('back');
-    }
-   
+    
 };
 module.exports.detailProfile=function(req,res){
     user.findById(req.query.id,(err,users)=>{

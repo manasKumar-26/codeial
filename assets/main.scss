@@ -92,3 +92,39 @@ h4{
     align-items: flex-end;
     flex-direction: column;
 }
+#dpimage img{
+    height: 12rem;
+    width: 12rem;
+    margin: auto;
+    border-radius: 50%;
+    text-align: center;
+    // margin-top: -17vh;
+}
+.profileCard{
+    display: flex;
+    justify-content: flex-end;
+    div{
+        align-items: center;
+        background-color: transparent !important;
+    }
+}
+.image-cointainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+#modalClass{
+    position: absolute;
+    opacity: 1;
+    left: 75vh;
+    top:40vh;
+    z-index: 3;
+    button{
+        margin-top:5px;
+    }
+}
+.view{
+    opacity: 1;
+    z-index: 3;
+}
