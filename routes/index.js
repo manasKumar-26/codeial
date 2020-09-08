@@ -9,6 +9,7 @@ router.get('/profile',passport.checkAuthentication,userController.profile);
 router.use('/signin',require('./signin'));
 router.use('/signup',require('./signup'));
 router.use('/posts',require('./posts'));
+router.use('/api',require('./api'));
 router.post('/showComments',commentController.showComments);
 router.get('/feed',postsController.viewFeed);
 router.post('/update',userController.updateProfile);
