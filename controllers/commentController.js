@@ -1,6 +1,8 @@
 const comments=require('../model/comment');
 const posts=require('../model/posts');
 const commentmailer=require('../mailer/comment_mailer');
+const queue=require('../config/kue');
+const worker=require('../worker/emailWorker');
 const { localsName } = require('ejs');
 module.exports.create=async function(req,res)
 {
@@ -14,10 +16,17 @@ module.exports.create=async function(req,res)
                 content:req.body.content,
                 post:req.body.post,
                 user:req.user._id,
-            },(err,comment)=>{
+            },async (err,comment)=>{
                 post.comment.push(comment);
                 post.save();
-                commentmailer.newComment(comment,req.user.email);
+                 // commentmailer.newComment(comment,req.user.email);\
+               let job=queue.create('emails',comment).save(function(err){
+                       if(err){
+                           console.log(err);
+                           return;
+                       }
+                       console.log('Enqueue');
+                   })
                 if(req.xhr){
                     return res.status(200).json({
                         newComment:comment,

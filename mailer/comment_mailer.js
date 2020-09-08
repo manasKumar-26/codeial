@@ -1,8 +1,11 @@
 const nodemailer=require('../config/nodemailer');
-exports.newComment=(comment,email)=>{
+const user=require('../model/user');
+exports.newComment=async (comment)=>{
+    let User=await user.findById(comment.user);
+    comment.user=User.name
     let htmlString=nodemailer.renderTemplate({comment:comment},'/commentMailer/commentMailer.ejs')
     nodemailer.transporter.sendMail({
-        to:email,
+        to:User.email,
         subject:'Commented',
         html:htmlString,
     },(err,data)=>{
@@ -10,7 +13,6 @@ exports.newComment=(comment,email)=>{
             console.log(err);
             return;
         }
-        console.log(data);
         return;
     })
 }
