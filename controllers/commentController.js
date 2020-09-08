@@ -1,13 +1,13 @@
 const comments=require('../model/comment');
 const posts=require('../model/posts');
+const commentmailer=require('../mailer/comment_mailer');
 const { localsName } = require('ejs');
-module.exports.create=function(req,res)
+module.exports.create=async function(req,res)
 {
     if(!req.isAuthenticated())
     {
         return res.redirect('/signin');
     }
-    console.log('post finding');
     posts.findById(req.body.post,function(err,post){
         if(post){
             comments.create({
@@ -17,6 +17,7 @@ module.exports.create=function(req,res)
             },(err,comment)=>{
                 post.comment.push(comment);
                 post.save();
+                commentmailer.newComment(comment,req.user.email);
                 if(req.xhr){
                     return res.status(200).json({
                         newComment:comment,
