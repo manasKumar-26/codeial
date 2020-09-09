@@ -121,3 +121,9 @@ h4 {
 .view {
   opacity: 1;
   z-index: 3; }
+
+.liked {
+  color: blue; }
+
+.unliked {
+  color: white; }

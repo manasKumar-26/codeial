@@ -1,4 +1,31 @@
+
 {
+    let likes=$('.likesButton');
+    for(let like of likes){
+        like.addEventListener('click',function(e){
+            e.preventDefault();
+            let link=like.getAttribute('href').split('?')[1].split('&');
+            let id=link[0].substring(3);
+            let type=link[1].substring(5);
+            $.ajax({
+                type:'get',
+                url:`/posts/likes/?id=${id}&type=${type}`,
+                success:function(data){
+                    console.log(data);
+                    if(data.deleted){
+                        // like.classList.remove('liked')
+                        like.style.color='white';
+                    }else{
+                        // like.classList.add('liked');
+                        like.style.color='blue';
+                    }
+                },
+                error:function(error){
+                    console.log(error.responseText);
+                },
+            });
+        });
+    };
     let createPost=function(){
         let newPostForm=$('#feedFormPost');
         newPostForm.submit(function(e){
@@ -93,5 +120,6 @@
                 <div id="hrlength"></div>
             `)
     }
+    
     createPost();
 }
