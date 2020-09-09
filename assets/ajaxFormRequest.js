@@ -12,12 +12,18 @@
                 url:`/posts/likes/?id=${id}&type=${type}`,
                 success:function(data){
                     console.log(data);
+                    let count=like.getAttribute('data-likeCount');
+                    console.log(count);
                     if(data.deleted){
                         // like.classList.remove('liked')
                         like.style.color='white';
+                        like.innerText=--count;
+                        like.setAttribute('data-likeCount',count)
                     }else{
                         // like.classList.add('liked');
                         like.style.color='blue';
+                        like.innerText=++count;
+                        like.setAttribute('data-likeCount',count)
                     }
                 },
                 error:function(error){

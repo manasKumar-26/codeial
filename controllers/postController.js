@@ -54,7 +54,8 @@ module.exports.viewFeed=async function(req,res){
     // })
     try {
         let users=await user.find({});
-        let post=await posts.find({}).populate('user').sort('-createdAt');
+        let post=await posts.find({}).populate('user').populate('like').sort('-createdAt');
+        console.log(post)
         return res.render('feed',{
             title:'User | Feed',
             post:post,

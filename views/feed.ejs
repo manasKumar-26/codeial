@@ -24,8 +24,7 @@
                                 </div>
                             </div>
                             <div>
-                                <a href="/posts/likes/?id=<%= p.id%>&type=posts" class="likesButton"><i class="fas fa-thumbs-up"></i></a>
-                                <p class="teal"><%=p.like.length%> Likes</p>
+                                <a href="/posts/likes/?id=<%= p.id%>&type=posts" class="likesButton" data-likeCount="<%=p.like.length %>"><i class="fas fa-thumbs-up"></i><%=p.like.length%> Likes</a>
                             </div>
                             <form action="/showComments" method="POST">
                                 <input type="hidden" name="post" value="<%= p.id %>">
