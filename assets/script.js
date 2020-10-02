@@ -1,9 +1,8 @@
-let viewDpChange=document.getElementById('ChangeDp');
-viewDpChange.addEventListener('click',()=>{
-    console.log('clicked')
-    document.getElementById('modalClass').classList.add('view');
+let viewDpChange = document.getElementById('ChangeDp');
+viewDpChange.addEventListener('click', () => {
+    document.getElementById('modalClass').classList.toggle('view')
 });
-document.getElementById('uploadImage').addEventListener('change',function(){
+document.getElementById('uploadImage').addEventListener('change', function () {
     var oFReader = new FileReader();
     oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
 
